@@ -159,10 +159,17 @@ class ExperimentAnalysis:
                    )
         results.index = self.percentiles
         results = results.T
-        results['significant?'] = results.apply(lambda z: z[self.percentiles[0]] / z[self.percentiles[0]] > 0,
-                                                         axis=1)
+        results['significant?'] = results.apply(lambda z: self.is_signficant(z), axis=1)
         results[self.percentiles] = results[self.percentiles].applymap(lambda x: format(x, '.2%'))
         return results
+
+    def is_signficant(self, row):
+        if (self.n_tail_test == 1) & (self.which_tail == 'upper'):
+            return row[max(self.percentiles)] < 0
+        if (self.n_tail_test == 1) & (self.which_tail == 'lower'):
+            return row[min(self.percentiles)] > 0
+        else:
+            return row[max(self.percentiles)] / row[min(self.percentiles)] > 0
 
     def create_bar_chart_data(self, metric):
         bar_data = (self.data

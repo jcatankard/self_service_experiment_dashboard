@@ -59,8 +59,6 @@ with st.sidebar:
                     "target='_blank'>chi-squared distribution</a>.", unsafe_allow_html=True)
 
         df = load_dummy_data(n_visitors, conversion_rates, r_per_o)
-        df.write_csv('test.csv')
-        df.write_parquet('test.parquet')
 
     else:
         file_type = st.selectbox('Select file type:', ['csv', 'parquet'])
