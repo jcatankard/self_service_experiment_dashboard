@@ -1,0 +1,6 @@
+polars
+numpy
+numba
+streamlit==1.19.0
+plotly
+scipy
